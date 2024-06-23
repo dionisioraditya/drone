@@ -29,6 +29,15 @@ void loop() {
   } else {
     oled.print("HOVER", 40, 40);
   }
-
+  if(controller.swState(1)==1) {
+    oled.print("SW1 ON", 0, 0);
+  } else {
+    oled.print("SW1 OFF", 0, 0);
+  }
+  if(controller.swState(2)==1) {
+    oled.print("SW1 ON", 60, 0);
+  } else {
+    oled.print("SW1 OFF", 60, 0);
+  }
   oled.displayOled();
 }

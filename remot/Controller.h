@@ -64,6 +64,16 @@ class Controller {
         return "HOVER";
       }
     }
+    int swState(int buttonIndex) {
+      if(buttonIndex ==1) {
+        return bValue1;
+      } else if(buttonIndex==2) {
+        return bValue2;
+      } else {
+        return 0;
+      }
+    }
+    
     void SerialPrint() {
       Serial.print(yValue1);
     }
