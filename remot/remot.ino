@@ -8,7 +8,7 @@ void setup() {
   Serial.begin(9600);
   oled.init();
   controller.init();
-  radio.init();
+  radio.initTransfer();
 }
 void loop() {
   oled.clearOled();
