@@ -1,6 +1,6 @@
 #ifndef DATAPACKET_H
 #define DATAPACKET_H
-// data transfer container 
+// data receive container 
 struct DataPacket {
   int altitude;
   int xAxisTilt;
