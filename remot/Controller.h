@@ -11,7 +11,10 @@
 #define VRY_PIN2  A2 // Arduino pin connected to VRY pin
 #define SW_PIN    2  // Arduino pin connected to SW  pin
 #define SW_PIN2   3
-
+#define TSW_PIN1 4
+#define TSW_PIN2 5
+#define POT1 A6
+#define POT2 A7
 class Controller {
   private:
     ezButton button1;
@@ -22,20 +25,26 @@ class Controller {
     int xValue2; // To store value of the X axis
     int yValue2; // To store value of the Y axis
     int bValue2; // To store value of the button
-
+    int TSW_State1;
+    int TSW_State2;
+    int pot1Value;
+    int pot2Value;
   public:
     Controller() : button1(SW_PIN), button2(SW_PIN2) {}
 
     void init() {
       button1.setDebounceTime(50);
       button2.setDebounceTime(50);
+      pinMode(TSW_PIN1, INPUT_PULLUP);
+      pinMode(TSW_PIN2, INPUT_PULLUP);
+      this->TSW_State1 = 0;
+      this->TSW_State2 = 0;
     }
 
     void swLoop() {
       button1.loop();
       button2.loop();
     }
-
     String axis() {
       xValue1 = analogRead(VRX_PIN1);
       yValue1 = analogRead(VRY_PIN1);
@@ -76,6 +85,22 @@ class Controller {
     
     void SerialPrint() {
       Serial.print(yValue1);
+    }
+    int tsw1Value() {
+      this->TSW_State1 = digitalRead(TSW_PIN1);
+      return this->TSW_State1;
+    }
+    int tsw2Value() {
+      this->TSW_State2 = digitalRead(TSW_PIN2);
+      return this->TSW_State2;
+    }
+    int pot1() {
+      this->pot1Value = digitalRead(POT1);
+      return this->pot1Value;
+    }
+    int pot2() {
+      this->pot2Value = digitalRead(POT2);
+      return this->pot2Value;
     }
 };
 

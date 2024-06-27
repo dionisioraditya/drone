@@ -34,6 +34,9 @@ class Radio {
     void transfer(const char txt[]) {
       radio1.write(&txt, sizeof(txt)+1);
     }
+    void transferInt(const int data) {
+      radio1.write(&data, sizeof(data));
+    }
     _Bool receive(DataPacket& data){
       if(radio2.available()) {
         //char text[32] = "";
