@@ -30,11 +30,7 @@ class OLEDDisplay {
     void clearOled() {
       display.clearDisplay();
     }
-    void println(String str, int16_t x, int16_t y) {
-      display.setCursor(x, y);
-      display.println(str);
-    }
-    void print(String str, int16_t x, int16_t y) {
+    void print(const char * str, int16_t x, int16_t y) {
       display.setCursor(x, y);
       display.print(str);
     }

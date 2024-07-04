@@ -4,7 +4,8 @@
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
-#include "DataPacket.h"
+#include "DataPacketRec.h"
+#include "DataPacketTrf.h"
 #define CE 7
 #define CNS 8
 #define CE2 10
@@ -31,15 +32,11 @@ class Radio {
       radio2.setPALevel(RF24_PA_MIN);
       radio2.startListening();
     }
-    void transfer(const char txt[]) {
-      radio1.write(&txt, sizeof(txt)+1);
-    }
-    void transferInt(const int data) {
+    void transfer(DataPacketTrf& data) {
       radio1.write(&data, sizeof(data));
     }
-    _Bool receive(DataPacket& data){
+    _Bool receive(DataPacketRec& data){
       if(radio2.available()) {
-        //char text[32] = "";
         radio2.read(&data, sizeof(data));
         return true;
       }

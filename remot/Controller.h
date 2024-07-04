@@ -21,12 +21,12 @@ class Controller {
     ezButton button2;
     int xValue1; // To store value of the X axis
     int yValue1; // To store value of the Y axis
-    int bValue1; // To store value of the button
+    byte bValue1; // To store value of the button
     int xValue2; // To store value of the X axis
     int yValue2; // To store value of the Y axis
-    int bValue2; // To store value of the button
-    int TSW_State1;
-    int TSW_State2;
+    byte bValue2; // To store value of the button
+    byte TSW_State1;
+    byte TSW_State2;
     int pot1Value;
     int pot2Value;
   public:
@@ -45,7 +45,7 @@ class Controller {
       button1.loop();
       button2.loop();
     }
-    String axis() {
+    const char* axis() {
       xValue1 = analogRead(VRX_PIN1);
       yValue1 = analogRead(VRY_PIN1);
       bValue1 = button1.getState();
@@ -86,11 +86,11 @@ class Controller {
     void SerialPrint() {
       Serial.print(yValue1);
     }
-    int tsw1Value() {
+    byte tsw1Value() {
       this->TSW_State1 = digitalRead(TSW_PIN1);
-      return this->TSW_State1;
+      return this->TSW_State1 = 1;
     }
-    int tsw2Value() {
+    byte tsw2Value() {
       this->TSW_State2 = digitalRead(TSW_PIN2);
       return this->TSW_State2;
     }

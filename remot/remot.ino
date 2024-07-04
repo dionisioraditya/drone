@@ -1,11 +1,12 @@
 #include "OLEDDisplay.h"
 #include "Controller.h"
 #include "Radio.h"
-#include "DataPacket.h"
+#include "DataPacketRec.h"
 OLEDDisplay oled;
 Controller controller;
 Radio radioTrf, radioRec;
-DataPacket dataReceive;
+DataPacketRec dataReceive;
+DataPacketTrf dataTrf;
 void setup() {
   Serial.begin(9600);
   oled.init();
@@ -14,59 +15,77 @@ void setup() {
   radioRec.initReceive();
 }
 void loop() {
+  
   if(controller.tsw1Value()==1) {
+    dataTrf.toggleSwitch2 = controller.tsw2Value();
+    radioTrf.transfer(dataTrf);
+    Serial.println(dataTrf.joystick);
     oled.clearOled();
     controller.swLoop();
-    radioTrf.transferInt(controller.pot1());
+    dataTrf.pot1 = controller.pot1();
+    radioTrf.transfer(dataTrf);
     if(controller.axis()== "FORWARD") {
       oled.print("FORWARD", 40, 40);
-      radioTrf.transfer("FORWARD");
+      strcpy(dataTrf.joystick, "FORWARD");
+      radioTrf.transfer(dataTrf);
     } 
     else if(controller.axis()=="BACKWARD") {
       oled.print("BACKWARD", 40, 40);
-      radioTrf.transfer("BACKWARD");
+      strcpy(dataTrf.joystick, "BACKWARD");
+      radioTrf.transfer(dataTrf);
     } 
     else if(controller.axis()=="RIGHT") {
       oled.print("RIGHT", 40, 40);
-      radioTrf.transfer("RIGHT");
+      strcpy(dataTrf.joystick, "RIGHT");
+      radioTrf.transfer(dataTrf);
     } 
     else if(controller.axis()=="LEFT") {
       oled.print("LEFT", 40, 40);
-      radioTrf.transfer("LEFT");
+      strcpy(dataTrf.joystick, "LEFT");
+      radioTrf.transfer(dataTrf);
     } 
     else if(controller.axis()=="FORWARD RIGHT") {
       oled.print("FORWARD RIGHT", 40, 40);
-      radioTrf.transfer("FORWARD RIGHT");
+      strcpy(dataTrf.joystick, "FORWARD RIGHT");
+      radioTrf.transfer(dataTrf);
     } 
     else if(controller.axis()=="FORWARD LEFT") {
       oled.print("FORWARD LEFT", 40, 40);
-      radioTrf.transfer("FORWARD LEFT");
+      strcpy(dataTrf.joystick, "FORWARD LEFT");
+      radioTrf.transfer(dataTrf);
     } 
     else if(controller.axis()=="BACKWARD RIGHT") {
       oled.print("BACKWARD RIGHT", 40, 40);
-      radioTrf.transfer("BACKWARD RIGHT");
+      strcpy(dataTrf.joystick, "BACKWARD RIGHT");
+      radioTrf.transfer(dataTrf);
     } 
     else if(controller.axis()=="BACKWARD LEFT") {
       oled.print("BACKWARD LEFT", 40, 40);
-      radioTrf.transfer("BACKWARD LEFT");
+      strcpy(dataTrf.joystick, "BACKWARD LEFT");
+      radioTrf.transfer(dataTrf);
     } 
     else {
       oled.print("HOVER", 40, 40);
-      radioTrf.transfer("HOVER");
+      strcpy(dataTrf.joystick, "HOVER");
+      radioTrf.transfer(dataTrf);
     }
     if(controller.swState(1)==1) {
       oled.print("SW1 ON", 0, 0);
-      radioTrf.transfer("SW1 ON");
+      strcpy(dataTrf.switchJoystik1, "SW1 ON");
+      radioTrf.transfer(dataTrf);
     } else {
       oled.print("SW1 OFF", 0, 0);
-      radioTrf.transfer("SW1 OFF");
+      strcpy(dataTrf.switchJoystik1, "SW1 OFF");
+      radioTrf.transfer(dataTrf);
     }
     if(controller.swState(2)==1) {
       oled.print("SW2 ON", 60, 0);
-      radioTrf.transfer("SW2 ON");
+      strcpy(dataTrf.switchJoystik2, "SW2 ON");
+      radioTrf.transfer(dataTrf);
     } else {
       oled.print("SW2 OFF", 60, 0);
-      radioTrf.transfer("SW2 OFF");
+      strcpy(dataTrf.switchJoystik2, "SW2 OFF");
+      radioTrf.transfer(dataTrf);
     }
     oled.displayOled();
   } else {
