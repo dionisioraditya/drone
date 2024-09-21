@@ -13,8 +13,8 @@
 #define SW_PIN2   3
 #define TSW_PIN1 4
 #define TSW_PIN2 5
-#define POT1 A6
-#define POT2 A7
+#define POT1 A7
+#define POT2 A6
 class Controller {
   private:
     ezButton button1;
@@ -37,8 +37,8 @@ class Controller {
       button2.setDebounceTime(50);
       pinMode(TSW_PIN1, INPUT_PULLUP);
       pinMode(TSW_PIN2, INPUT_PULLUP);
-      this->TSW_State1 = 0;
-      this->TSW_State2 = 0;
+      TSW_State1 = 0;
+      TSW_State2 = 0;
     }
 
     void swLoop() {
@@ -53,24 +53,32 @@ class Controller {
       xValue2 = analogRead(VRX_PIN2);
       yValue2 = analogRead(VRY_PIN2);
       bValue2 = button2.getState();
-      if (yValue1 > 600 && xValue2 > 400 && xValue2 < 600) {
+      if (yValue1 > 600 && xValue1 > 400 && xValue1 < 600) {
         return "FORWARD";
-      } else if (yValue1 < 500 && xValue2 > 400 && xValue2 < 600) {
+      } else if (yValue1 < 500 && xValue1 > 400 && xValue1 < 600) {
         return "BACKWARD";
-      } else if (xValue2 > 500 && yValue1 > 400 && yValue1 < 600) {
+      } else if (xValue1 > 520 && yValue1 > 400 && yValue1 < 600) {
         return "RIGHT";
-      } else if (xValue2 < 400 && yValue1 > 400 && yValue1 < 600) {
+      } else if (xValue1 < 500 && yValue1 > 400 && yValue1 < 600) {
         return "LEFT";
-      } else if (yValue1 > 600 && xValue2 > 600) {
+      } else if (yValue1 > 600 && xValue1 > 600) {
         return "FORWARD RIGHT";
-      } else if (yValue1 > 600 && xValue2 < 400) {
+      } else if (yValue1 > 600 && xValue1 < 400) {
         return "FORWARD LEFT";
-      } else if (yValue1 < 400 && xValue2 > 600) {
+      } else if (yValue1 < 400 && xValue1 > 600) {
         return "BACKWARD RIGHT";
-      } else if (yValue1 < 400 && xValue2 < 400) {
+      } else if (yValue1 < 400 && xValue1 < 400) {
         return "BACKWARD LEFT";
       } else {
         return "HOVER";
+      }
+    }
+    int getJoyStick2(const char* axis) {
+      if(axis == "x") {
+        return xValue2;
+      } 
+      if (axis == "y") {
+        return yValue2;
       }
     }
     int swState(int buttonIndex) {
@@ -82,25 +90,24 @@ class Controller {
         return 0;
       }
     }
-    
-    void SerialPrint() {
-      Serial.print(yValue1);
+    int  printSerial() {
+      return xValue1;
     }
     byte tsw1Value() {
-      this->TSW_State1 = digitalRead(TSW_PIN1);
-      return this->TSW_State1 = 1;
+      TSW_State1 = digitalRead(TSW_PIN1);
+      return TSW_State1;
     }
     byte tsw2Value() {
-      this->TSW_State2 = digitalRead(TSW_PIN2);
-      return this->TSW_State2;
+      TSW_State2 = digitalRead(TSW_PIN2);
+      return TSW_State2;
     }
     int pot1() {
-      this->pot1Value = digitalRead(POT1);
-      return this->pot1Value;
+      pot1Value = analogRead(POT1);
+      return pot1Value;
     }
     int pot2() {
-      this->pot2Value = digitalRead(POT2);
-      return this->pot2Value;
+      pot2Value = analogRead(POT2);
+      return pot2Value;
     }
 };
 

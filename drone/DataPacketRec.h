@@ -1,7 +1,7 @@
-#ifndef DATAPACKETTRF_H
-#define DATAPACKETTRF_H
-// data receive container 
-struct DataPacketTrf {
+#ifndef DATAPACKETREC_H
+#define DATAPACKETREC_H
+
+struct DataPacketRec{
   char joystick1[15];
   int joystick2;
   int pot1;
@@ -10,5 +10,4 @@ struct DataPacketTrf {
   char switchJoystik1[15];
   char switchJoystik2[15];
 };
-
 #endif

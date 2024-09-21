@@ -16,7 +16,7 @@ class Radio {
     RF24 radio1;
     RF24 radio2;
     const byte address1[6] = { 'T', 'X', 'A', 'A', 'A' };
-    const byte address2[6] = { 'R', 'X', 'A', 'A', 'A' };
+    const byte address2[6] = { '0', '0', '0', '0', '1' };
   public:
     Radio() : radio1(CE, CNS), radio2(CE2, CNS2) {}
 
@@ -28,7 +28,8 @@ class Radio {
     }
     void initReceive() {
       radio2.begin();
-      radio2.openWritingPipe(address2);
+      //radio2.setChannel(76); // Set the channel to 76
+      radio2.openReadingPipe(0, address2);
       radio2.setPALevel(RF24_PA_MIN);
       radio2.startListening();
     }
